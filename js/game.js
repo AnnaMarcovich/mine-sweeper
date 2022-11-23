@@ -12,8 +12,8 @@ var gMine = 2
 function initGame() {
 
     gBoard = buildBoard()
+    setMinesNegsCount(gBoard)
     renderBoard(gBoard, '.board-container')
-
 }
 
 function buildBoard() {
@@ -22,31 +22,52 @@ function buildBoard() {
     for (var i = 0; i < size; i++) {
         board.push([])
         for (var j = 0; j < size; j++) {
-            board[i][j] = ''
+            board[i][j] = EMPTY
         }
     }
-    setMinesNegsCount()
-    // // Update Model
-    // gBoard[randIdx.i][randIdx.j] = MINE
 
-    // // Update DOM
-    // renderCell(gBoard, MINE)
+    buildMineCells(board);
+
+    // for (var i = 0; i < gMine; i++) {
+    //     var randomCell = getEmptyCells()
+    //     board[randomCell.i][randomCell.j] = MINE
+    // }
     return board
 }
 
-function setMinesNegsCount() {
-    var randIdx = getRandomIntInclusive(0, gSize ** 2)
-    const Cells = []
-    for (var i = 0; i < gMine.length; i++) {
-        for (var j = 0; j < gMine[0].length; j++) {
-            Cells.push({ i, j })
+function buildMineCells(board) {
+    var emptyCells = getEmptyCells()
 
-        }
+    for (var i = 0; i < gMine; i++) {
+        var idx = getRandomIntInclusive(0, emptyCells.length - 1)
+        var emptyCell = emptyCells[idx]
+        board[emptyCell.i][emptyCell.j] = MINE
+        emptyCells.splice(idx, 1)
+
     }
-    return Cells[randIdx]
-    console.log(Cells[randIdx])
+
 }
 
+function getEmptyCells() {
+    const cells = []
+    for (var i = 0; i < gSize; i++) {
+        for (var j = 0; j < gSize; j++) {
+            cells.push({ i, j })
+        }
+    }
+
+    return cells;
+}
+
+function setMinesNegsCount(board) {
+    for (var i = 0; i < board.length; i++) {
+        for (var j = 0; j < board[0].length; j++) {
+            if (board[i][j] !== MINE) {
+                board[i][j] = countNeighbors(board, i, j)
+            }
+        }
+    }
+}
 
 // function chooseDifficult(lvl) {
 //     gLevel = lvl

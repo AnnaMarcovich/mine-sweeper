@@ -18,14 +18,14 @@ h1 {
 .board {
     margin: auto;
     left: 50px;
-    width: 500px;
-    height: 500px;
     text-align: center;
 }
 
 
 .board td {
     background-color: rgba(164, 85, 203, 0.87);
+    width: 100px;
+    height: 100px;
 }
 
 .board td:hover {
