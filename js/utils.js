@@ -6,11 +6,21 @@ function renderBoard(mat, selector) {
     for (var i = 0; i < mat.length; i++) {
         strHTML += '<tr>'
         for (var j = 0; j < mat[0].length; j++) {
-
+            var content;
             const cell = mat[i][j]
             const className = `cell cell-${i}-${j}`
 
-            strHTML += `<td class="${className}">${cell}</td>`
+            if (!cell.isShown) {
+                content = EMPTY
+            } else if (cell.isShown && cell.isMine) {
+                content = MINE
+            } else if (cell.isShown && cell.isMarked) {
+                content = FLAGE
+            } else {
+                content = cell.minesAroundCount
+            }
+
+            strHTML += `<td class="${className}" onclick="cellClicked(${i}, ${j})">${content}</td>`
         }
         strHTML += '</tr>'
     }
@@ -41,7 +51,7 @@ function countNeighbors(board, rowIdx, colIdx) {
             if (j < 0 || j >= board[0].length) continue
             var currCell = board[i][j]
 
-            if (currCell === MINE) mineCount++
+            if (currCell.isMine) mineCount++
         }
     }
     return mineCount
