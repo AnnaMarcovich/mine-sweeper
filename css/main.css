@@ -8,10 +8,21 @@ h1 {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+button {
+    background-color: rgb(224, 178, 232);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 15px;
+    border: none;
+    width: 81.5px;
+    height: 30px;
+    margin-bottom: 10px;
+
+
+}
+
 .board-container {
     margin: auto;
     left: 50px;
-    font-size: 30;
     text-align: center;
 }
 
@@ -24,8 +35,8 @@ h1 {
 
 .board td {
     background-color: rgba(164, 85, 203, 0.87);
-    width: 100px;
-    height: 100px;
+    width: 60px;
+    height: 60px;
 }
 
 .board td:hover {

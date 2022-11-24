@@ -5,9 +5,7 @@ const FLAGE = '🚩'
 const EMPTY = ' '
 
 var gBoard
-var gSize = 4
-var gMine = 2
-// var gLevel = 16
+var gLevel = { size: 4, mines: 2 }
 
 function initGame() {
 
@@ -17,7 +15,7 @@ function initGame() {
 }
 
 function buildBoard() {
-    var size = gSize
+    var size = gLevel.size
     const board = []
     for (var i = 0; i < size; i++) {
         board.push([])
@@ -38,7 +36,7 @@ function buildBoard() {
 function buildMineCells(board) {
     var emptyCells = getEmptyCells()
 
-    for (var i = 0; i < gMine; i++) {
+    for (var i = 0; i < gLevel.mines; i++) {
         var idx = getRandomIntInclusive(0, emptyCells.length - 1)
         var emptyCell = emptyCells[idx]
         board[emptyCell.i][emptyCell.j] = MINE
@@ -50,8 +48,8 @@ function buildMineCells(board) {
 
 function getEmptyCells() {
     const cells = []
-    for (var i = 0; i < gSize; i++) {
-        for (var j = 0; j < gSize; j++) {
+    for (var i = 0; i < gLevel.size; i++) {
+        for (var j = 0; j < gLevel.size; j++) {
             cells.push({ i, j })
         }
     }
@@ -69,7 +67,32 @@ function setMinesNegsCount(board) {
     }
 }
 
-// function chooseDifficult(lvl) {
-//     gLevel = lvl
-//     restart()
-// }
+function chooseDifficult(size, mines) {
+    gLevel = { size, mines }
+    restart()
+}
+
+function restart() {
+    document.querySelector('.min').innerText = '00'
+    document.querySelector('.sec').innerText = '00'
+    initGame()
+}
+
+function timer() {
+    //sec
+    var elSec = document.querySelector('.sec')
+    var currSec = elSec.innerText
+    currSec++
+    elSec.innerText = currSec
+    //min
+    var elMin = document.querySelector('.min')
+    var currMin = elMin.innerText
+    if (currSec > 60) {
+        currMin++
+        elMin.innerText = currMin
+        //need to reset the sec
+        currSec = 0
+        elSec.innerText = currSec
+    }
+
+}
